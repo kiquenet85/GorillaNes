@@ -1,0 +1,21 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="default_extra_small_size">2dp</dimen>
+    <dimen name="default_small_size">4dp</dimen>
+    <dimen name="default_medium_size">8dp</dimen>
+    <dimen name="default_large_size">16dp</dimen>
+    <dimen name="default_xlarge_size">32dp</dimen>
+    <dimen name="default_xxlarge_size">64dp</dimen>
+    <dimen name="default_xxxlarge_size">128dp</dimen>
+    <dimen name="default_space_between_sections">12dp</dimen>
+
+    <dimen name="default_small_icon_size">18dp</dimen>
+    <dimen name="default_normal_icon_size">24dp</dimen>
+    <dimen name="default_big_icon_size">36dp</dimen>
+    <dimen name="default_large_icon_size">48dp</dimen>
+
+    <dimen name="cell_label_margin">16dp</dimen>
+
+</resources>

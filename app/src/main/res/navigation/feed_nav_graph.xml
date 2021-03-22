@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/WeatherListFragment">
+
+    <fragment
+        android:id="@+id/WeatherListFragment"
+        android:name="com.nesgorilla.feature.feed.ui.FeedListFragment"
+        android:label="Feed label"
+        tools:layout="@layout/feed_list_fragment">
+    </fragment>
+
+</navigation>
