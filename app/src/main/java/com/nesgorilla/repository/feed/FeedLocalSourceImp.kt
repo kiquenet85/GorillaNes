@@ -13,14 +13,14 @@ class FeedLocalSourceImp(private val db: GorillaDB) : FeedLocalSource {
 
     override suspend fun createOrUpdate(accountId: String, items: List<Feed>): Boolean {
         val newItemsId = mutableListOf<String>()
-        val oldItemsId = db.feedDAO().getAll(accountId).first().map { it.id }
+        val oldItemsId = db.feedDAO().getAllIds(accountId).first()
+
+        val account = db.accountDAO().getById(ACCOUNT_MOCK).first()
+        if (account == null){
+            db.accountDAO().insert(Account(ACCOUNT_MOCK, "Singleton Account"))
+        }
 
         db.withTransaction {
-            val account = db.accountDAO().getById(ACCOUNT_MOCK).first()
-            if (account == null){
-                db.accountDAO().insert(Account(ACCOUNT_MOCK, "Singleton Account"))
-            }
-
             items.forEach { toInsert ->
                 newItemsId.add(toInsert.id)
                 createOrUpdate(accountId, toInsert)

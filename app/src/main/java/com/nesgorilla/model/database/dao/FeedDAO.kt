@@ -13,6 +13,9 @@ interface FeedDAO {
     @Query("SELECT * FROM Feed where accountId = :accountId")
     fun getAll(accountId: String): Flow<List<Feed>>
 
+    @Query("SELECT id FROM Account where id = :accountId")
+    fun getAllIds(accountId: String): Flow<List<String>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<Feed>)
 
