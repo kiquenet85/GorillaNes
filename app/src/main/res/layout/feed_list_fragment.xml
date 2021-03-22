@@ -7,15 +7,56 @@
     tools:context=".feature.feed.ui.FeedListActivity"
     tools:ignore="MissingClass">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favoriteLocations"
+    <LinearLayout
+        android:id="@+id/feedHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/favoriteLocations"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/feed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_large_size"
+            android:textSize="@dimen/large_text_size"
+            tools:text="Tuesday June 16" />
+
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_large_size"
+            android:layout_marginEnd="@dimen/default_large_size"
+            android:layout_marginBottom="@dimen/default_large_size"
+            android:text="@string/feed_hello"
+            android:textSize="@dimen/xxlarge_text_size"
+            android:textStyle="bold"
+            tools:text="Hello Jane" />
+
+        <TextView
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/default_large_size"
+            android:text="@string/feed_post"
+            android:textSize="@dimen/large_text_size"
+            tools:text="What's on your mind?" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/feed"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedHeader"
         tools:listitem="@layout/feed_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

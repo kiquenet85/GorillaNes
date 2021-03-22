@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NesGorilla</string>
+
+    //POST
+    <string name="feed_hello">Hello Gorilla</string>
+    <string name="feed_post">What\'s on your mind?</string>
 </resources>

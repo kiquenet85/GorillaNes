@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,22 +19,19 @@ import com.nesgorilla.di.AppComponent
 import com.nesgorilla.feature.feed.adapter.FeedListAdapter
 import com.nesgorilla.feature.feed.use_case.FeedListLoaded
 import com.nesgorilla.util.MarginItemDecoration
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class FeedListFragment : BaseFragment() {
 
-    private lateinit var adapter: FeedListAdapter
+    private lateinit var feedAdapter: FeedListAdapter
     private val viewModel by viewModels<FeedListViewModel>(factoryProducer = {
         AppComponent.getInstance().provideFeedModule()
-                .provideFeedListViewFactory((requireActivity() as AppCompatActivity))
+            .provideFeedListViewFactory((requireActivity() as AppCompatActivity))
     }, ownerProducer = { this })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.loadFeed()
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,9 +41,10 @@ class FeedListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.favoriteLocations)
-        adapter = FeedListAdapter(mutableListOf())
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        view.findViewById<TextView>(R.id.date).text = resourceManager.formatDate(Calendar.getInstance().time)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.feed)
+
+        feedAdapter = FeedListAdapter(mutableListOf())
         val itemDecorator = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         itemDecorator.setDrawable(
             ContextCompat.getDrawable(
@@ -53,13 +52,19 @@ class FeedListFragment : BaseFragment() {
                 R.drawable.shape_item_divider
             )!!
         )
-        recyclerView.addItemDecoration(itemDecorator)
-        recyclerView.addItemDecoration(
-            MarginItemDecoration(
-                marginSides = resources.getDimension(R.dimen.cell_label_margin).toInt()
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+
+            addItemDecoration(itemDecorator)
+            addItemDecoration(
+                MarginItemDecoration(
+                    resources.getDimension(R.dimen.cell_top_margin).toInt(),
+                    resources.getDimension(R.dimen.cell_top_margin).toInt(),
+                    resources.getDimension(R.dimen.cell_label_margin).toInt()
+                )
             )
-        )
-        recyclerView.adapter = adapter
+            recyclerView.adapter = feedAdapter
+        }
 
         viewModel.getErrorState().observe(viewLifecycleOwner, { errorState ->
             getView()?.let {
@@ -69,10 +74,7 @@ class FeedListFragment : BaseFragment() {
 
         viewModel.getScreenState().observe(viewLifecycleOwner, { feedListState ->
             feedListState as FeedListLoaded
-            //adapter.addNewItems(feedListState.allItems)
-            getView()?.let {
-                Snackbar.make(it, "${feedListState.allItems.size}", Snackbar.LENGTH_SHORT).show()
-            }
+            feedAdapter.addNewItems(feedListState.allItems)
         })
     }
 }

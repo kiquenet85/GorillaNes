@@ -16,6 +16,12 @@
     <dimen name="default_big_icon_size">36dp</dimen>
     <dimen name="default_large_icon_size">48dp</dimen>
 
+    <dimen name="default_text_size">12sp</dimen>
+    <dimen name="large_text_size">14sp</dimen>
+    <dimen name="xlarge_text_size">16sp</dimen>
+    <dimen name="xxlarge_text_size">20sp</dimen>
+
     <dimen name="cell_label_margin">16dp</dimen>
+    <dimen name="cell_top_margin">12dp</dimen>
 
 </resources>

@@ -32,9 +32,7 @@ class MarginItemDecoration(private val marginTop: Int = 0,
     fun applyTopAtBeginningAndOtherMargins(outRect: Rect, view: View,
                                            parent: RecyclerView, state: RecyclerView.State) {
         with(outRect) {
-            if (parent.getChildAdapterPosition(view) == 0) {
-                top = marginTop
-            }
+            top = marginTop
             left = marginSides
             right = marginSides
             bottom = marginBottom

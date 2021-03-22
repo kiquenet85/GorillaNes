@@ -5,6 +5,9 @@ import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.nesgorilla.R
+import com.nesgorilla.util.EMPTY_STRING
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Resource Manager Singleton
@@ -15,6 +18,8 @@ import com.nesgorilla.R
  * Context could be conveniently used with an specific context, otherwise will use application context.
  */
 class ResourceManager private constructor(private val appContext: Context) {
+
+    private val simpleDate: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
     enum class ResourceType(val value: String) {
         STRING("string"),
@@ -211,6 +216,19 @@ class ResourceManager private constructor(private val appContext: Context) {
         context: Context = appContext
     ) =
         getStringResourceId(PREFIX_ERROR_TITLE_IDENTIFIER.plus(errorCode), defaultValue, context)
+
+
+    /**
+     * Formatting date
+     */
+    fun formatDate(date: Date): String {
+        return simpleDate.format(date)
+    }
+
+    fun formatDate(dateString: String?): String {
+        return dateString?.let { simpleDate.format(Date(dateString.toLong())) }
+            ?: EMPTY_STRING
+    }
 
     companion object {
 
