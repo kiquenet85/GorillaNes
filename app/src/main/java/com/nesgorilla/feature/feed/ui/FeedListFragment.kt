@@ -27,9 +27,13 @@ class FeedListFragment : BaseFragment() {
     private lateinit var adapter: FeedListAdapter
     private val viewModel by viewModels<FeedListViewModel>(factoryProducer = {
         AppComponent.getInstance().provideFeedModule()
-            .provideWeatherListViewFactory((requireActivity() as AppCompatActivity))
-    })
+                .provideFeedListViewFactory((requireActivity() as AppCompatActivity))
+    }, ownerProducer = { this })
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.loadFeed()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

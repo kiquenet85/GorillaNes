@@ -2,18 +2,18 @@ package com.nesgorilla.model.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.nesgorilla.model.database.dao.AccountDao
-import com.nesgorilla.model.database.dao.FeedDao
+import com.nesgorilla.model.database.dao.AccountDAO
+import com.nesgorilla.model.database.dao.FeedDAO
 import com.nesgorilla.model.database.entity.Account
 import com.nesgorilla.model.database.entity.Feed
 
 @Database(
     entities = [
         Account::class, Feed::class
-    ], version = 1
+    ], version = 2
 )
 abstract class GorillaDB : RoomDatabase() {
 
-    abstract fun userDAO(): FeedDao
-    abstract fun accountDAO(): AccountDao
+    abstract fun feedDAO(): FeedDAO
+    abstract fun accountDAO(): AccountDAO
 }

@@ -5,7 +5,7 @@ import com.nesgorilla.model.database.entity.Account
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AccountDao {
+interface AccountDAO {
 
     @Query("SELECT * FROM Account where id = :id")
     fun getById(id: String): Flow<Account?>

@@ -9,10 +9,13 @@ import java.util.concurrent.TimeUnit
 
 class NetworkModule {
     private var retrofit: Retrofit? = null
+    private var gson: Gson? = null
 
     fun provideDefaultGson(): Gson {
-        val gsonBuilder = GsonBuilder()
-        return gsonBuilder.create()
+        if (gson == null) {
+            gson = GsonBuilder().create()
+        }
+        return gson!!
     }
 
     fun provideRetrofit(): Retrofit {

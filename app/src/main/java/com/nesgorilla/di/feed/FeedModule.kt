@@ -17,14 +17,7 @@ class FeedModule(
     private val errorHandler: ErrorHandler
 ) {
 
-    fun provideWeatherListViewFactory(owner: SavedStateRegistryOwner) =
-        FeedViewModelFactory(
-            owner,
-            errorHandler,
-            this
-        )
-
-    fun provideWeatherDetailViewFactory(owner: SavedStateRegistryOwner) =
+    fun provideFeedListViewFactory(owner: SavedStateRegistryOwner) =
         FeedViewModelFactory(
             owner,
             errorHandler,
@@ -32,15 +25,13 @@ class FeedModule(
         )
 
     fun provideFeedRemoteSource() = FeedRemoteSourceImp(provideFeedRemoteAPI())
+
     fun provideFeedLocalSource() = FeedLocalSourceImp(db)
 
     fun provideFeedRemoteAPI() = retrofit.create(FeedAPI::class.java)
 
     fun provideLoadFeedListUC() =
-        LoadFeedUC(
-            provideUserRepository()
-        )
+        LoadFeedUC(provideUserRepository())
 
-    fun provideUserRepository() =
-        FeedRepository(errorHandler, provideFeedLocalSource(), provideFeedRemoteSource())
+    fun provideUserRepository() = FeedRepository(errorHandler, provideFeedLocalSource(), provideFeedRemoteSource())
 }

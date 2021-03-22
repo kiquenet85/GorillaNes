@@ -5,7 +5,7 @@ import com.nesgorilla.model.database.entity.Feed
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FeedDao {
+interface FeedDAO {
 
     @Query("SELECT * FROM Feed where id = :id")
     fun getById(id: String): Flow<Feed?>

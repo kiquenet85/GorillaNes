@@ -17,14 +17,10 @@ class FeedListViewModel(
     private val loadFeedUC: LoadFeedUC,
 ) : BaseCoroutineViewModel(errorHandler) {
 
-    init {
-        loadFeed()
-    }
-
     private val stateScreen = MutableLiveData<FeedListState>()
     fun getScreenState(): LiveData<FeedListState> = stateScreen
 
-    private fun loadFeed() {
+    fun loadFeed() {
         viewModelScope.launch(errorHandler) {
             loadFeedUC.execute().collect {
                 stateScreen.value = it

@@ -8,13 +8,13 @@ import com.nesgorilla.di.feed.FeedModule
 
 class AppComponent private constructor (private val appContext: Context) {
 
-    private val networkModule: NetworkModule by lazy { NetworkModule() }
+    private val errorHandler = ErrorHandler()
+    private val networkModule: NetworkModule = NetworkModule()
     private val dataModule: DataModule =  DataModule(appContext).apply {
         provideDB().query("select 1", null)
     }
 
     private val feedModule by lazy { FeedModule(dataModule.provideDB(), networkModule.provideRetrofit(), errorHandler) }
-    private val errorHandler by lazy { ErrorHandler() }
 
     fun provideResourceManager() = ResourceManager.getInstance(appContext)
 
