@@ -2,11 +2,14 @@
 
 package com.nesgorilla.repository.base.operation
 
+import com.nesgorilla.base.error.ErrorHandler
 import com.nesgorilla.repository.base.RepositoryPolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 
 interface RepositoryReadOperation<Remote, Local, Info, Return> : RepositoryPolicy<Info> {
+
+    fun getErrorHandler() : ErrorHandler
 
     suspend fun execute(info: Info): Flow<Return> {
         val emmitRemoteErrors = flow<Return> {
@@ -16,7 +19,7 @@ interface RepositoryReadOperation<Remote, Local, Info, Return> : RepositoryPolic
                 updateDatabase(transformedResult, info)
             }
         }.catch { e ->
-            //Report Remote error but keep working
+            getErrorHandler().report(e)
         }.flowOn(Dispatchers.IO)
         return listOf(readFromDatabase(info), emmitRemoteErrors).merge() as Flow<Return>
     }

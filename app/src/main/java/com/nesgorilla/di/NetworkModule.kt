@@ -18,13 +18,13 @@ class NetworkModule {
     fun provideRetrofit(): Retrofit {
         if (retrofit == null) {
             val okHttpClient = OkHttpClient.Builder()
-                .readTimeout(1, TimeUnit.SECONDS)
-                .connectTimeout(1, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .build()
 
             // Create a very simple REST adapter which points to the settings base URL.
             retrofit = Retrofit.Builder()
-                .baseUrl("http://gl-endpoint.herokuapp.com")
+                .baseUrl("https://gl-endpoint.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

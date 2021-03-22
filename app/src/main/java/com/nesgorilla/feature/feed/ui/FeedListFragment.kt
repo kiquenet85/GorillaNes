@@ -1,12 +1,13 @@
 package com.nesgorilla.feature.feed.ui
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,15 +57,18 @@ class FeedListFragment : BaseFragment() {
         )
         recyclerView.adapter = adapter
 
-        viewModel.getErrorState().observe(viewLifecycleOwner, Observer { errorState ->
+        viewModel.getErrorState().observe(viewLifecycleOwner, { errorState ->
             getView()?.let {
                 Snackbar.make(it, errorState.message, Snackbar.LENGTH_SHORT).show()
             }
         })
 
-        viewModel.getScreenState().observe(viewLifecycleOwner, Observer { feedListState ->
+        viewModel.getScreenState().observe(viewLifecycleOwner, { feedListState ->
             feedListState as FeedListLoaded
-            adapter.addNewItems(feedListState.allItems)
+            //adapter.addNewItems(feedListState.allItems)
+            getView()?.let {
+                Snackbar.make(it, "${feedListState.allItems.size}", Snackbar.LENGTH_SHORT).show()
+            }
         })
     }
 }

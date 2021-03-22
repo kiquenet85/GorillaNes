@@ -42,5 +42,5 @@ class FeedModule(
         )
 
     fun provideUserRepository() =
-        FeedRepository(provideFeedLocalSource(), provideFeedRemoteSource())
+        FeedRepository(errorHandler, provideFeedLocalSource(), provideFeedRemoteSource())
 }

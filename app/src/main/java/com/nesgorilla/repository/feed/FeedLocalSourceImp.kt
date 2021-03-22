@@ -2,17 +2,26 @@ package com.nesgorilla.repository.feed
 
 import androidx.room.withTransaction
 import com.nesgorilla.model.database.GorillaDB
+import com.nesgorilla.model.database.entity.Account
 import com.nesgorilla.model.database.entity.Feed
+import com.nesgorilla.util.ACCOUNT_MOCK
 import com.nesgorilla.util.Optional
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import java.util.*
 
 class FeedLocalSourceImp(private val db: GorillaDB) : FeedLocalSource {
 
     override suspend fun createOrUpdate(accountId: String, items: List<Feed>): Boolean {
         val oldItemsId = db.userDAO().getAll(accountId).first().map { it.id }
         val newItemsId = mutableListOf<String>()
+
         db.withTransaction {
+            val account = db.accountDAO().getById(ACCOUNT_MOCK).first()
+            if (account == null){
+                db.accountDAO().insert(Account(ACCOUNT_MOCK, "Singleton Account"))
+            }
+
             items.forEach { toInsert ->
                 newItemsId.add(toInsert.id)
                 createOrUpdate(accountId, toInsert)

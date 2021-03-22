@@ -5,5 +5,5 @@ import retrofit2.http.GET
 interface FeedAPI {
 
     @GET("/feed")
-    suspend fun getJobSitesByAccountId(): FeedResponse
+    suspend fun getJobSitesByAccountId(): List<FeedDTO>
 }

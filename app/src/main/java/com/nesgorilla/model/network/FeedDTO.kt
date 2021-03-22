@@ -2,11 +2,7 @@ package com.nesgorilla.model.network
 
 import com.google.gson.annotations.Expose
 
-class FeedResponse (
-    @Expose var feeds: List<FeedDTO>
-)
-
-class FeedDTO (
+data class FeedDTO (
     @Expose var id: String? = null,
     @Expose var first_name: String? = null,
     @Expose var last_name: String? = null,

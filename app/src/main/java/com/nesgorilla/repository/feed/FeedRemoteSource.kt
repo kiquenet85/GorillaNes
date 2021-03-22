@@ -1,7 +1,7 @@
 package com.nesgorilla.repository.feed
 
-import com.nesgorilla.model.network.FeedResponse
+import com.nesgorilla.model.network.FeedDTO
 
 interface FeedRemoteSource {
-    suspend fun getAll(query: String): FeedResponse
+    suspend fun getAll(): List<FeedDTO>
 }
