@@ -1,12 +1,11 @@
 package com.nesgorilla.feature.post.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.nesgorilla.R
@@ -14,7 +13,6 @@ import com.nesgorilla.base.BaseFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.io.File
-import java.lang.Exception
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -25,6 +23,7 @@ class CreatePostFragment : BaseFragment() {
     private lateinit var characters: TextView
     private lateinit var addPhoto: Button
     private lateinit var image: ImageView
+    private var file: File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +31,10 @@ class CreatePostFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.create_post_fragment, container, false)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,11 +56,12 @@ class CreatePostFragment : BaseFragment() {
         }
     }
 
-    override fun setPickedImageToImageView(filePath: File) {
-        super.setPickedImageToImageView(filePath)
+    override fun setPickedImageToImageView(file: File) {
+        super.setPickedImageToImageView(file)
+        this.file = file
         Picasso.get()
-            .load(filePath)
-            .into(image,object: Callback {
+            .load(file)
+            .into(image, object: Callback {
                 override fun onSuccess() {
 
                 }
@@ -76,9 +80,28 @@ class CreatePostFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_share -> {
-                //viewModel.selectMultipleItems()
+                shareData()
                 true
             }
             else -> false
         }
+
+    private fun shareData() {
+        if (post.text.trim().count() > 0 || file != null) {
+            val share = Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.text)
+
+                putExtra(Intent.EXTRA_TITLE, getString(R.string.post_title))
+
+                file?.let {
+                    data = FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", it)
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                }
+            }, null)
+            startActivity(share)
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.please_share_post_to_send), Toast.LENGTH_LONG).show()
+        }
+    }
 }

@@ -92,14 +92,12 @@ open class BaseFragment : Fragment() {
     }
 
     open fun verifyStoragePermissions() : Boolean {
-        // Check if we have write permission
         val permission = ActivityCompat.checkSelfPermission(
             requireActivity(),
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
 
        return if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 PERMISSIONS_STORAGE,
@@ -117,7 +115,6 @@ open class BaseFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_EXTERNAL_STORAGE -> {
-                // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     requestDevicePhoto()

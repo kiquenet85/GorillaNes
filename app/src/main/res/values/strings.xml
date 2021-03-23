@@ -7,4 +7,6 @@
     <string name="add_photo">Add Photo</string>
     <string name="menu_share">SHARE</string>
     <string name="select_image">Select Image</string>
+    <string name="post_title">My New Post</string>
+    <string name="please_share_post_to_send">Please share what\'s on your mind?.</string>
 </resources>
