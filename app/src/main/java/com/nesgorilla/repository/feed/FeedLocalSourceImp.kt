@@ -16,7 +16,7 @@ class FeedLocalSourceImp(private val db: GorillaDB) : FeedLocalSource {
         val oldItemsId = db.feedDAO().getAllIds(accountId).first()
 
         val account = db.accountDAO().getById(ACCOUNT_MOCK).first()
-        if (account == null){
+        if (account == null) {
             db.accountDAO().insert(Account(ACCOUNT_MOCK, "Singleton Account"))
         }
 

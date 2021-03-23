@@ -15,16 +15,16 @@
         android:background="@color/white"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:padding="@dimen/default_large_size"
         android:hint="@string/feed_post"
+        android:inputType="textMultiLine"
+        android:maxLength="105"
+        android:padding="@dimen/default_large_size"
         android:textSize="@dimen/xxlarge_text_size"
         app:layout_constraintBottom_toTopOf="@+id/image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:maxLength="105"
         tools:text="What's on your mind?" />
 
     <ImageView
@@ -52,16 +52,14 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/add_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.nesgorilla.feature.feed.use_case
 
-import com.nesgorilla.repository.feed.FeedRepository
 import com.nesgorilla.repository.feed.FeedGetInfo
+import com.nesgorilla.repository.feed.FeedRepository
 import com.nesgorilla.util.ACCOUNT_MOCK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map

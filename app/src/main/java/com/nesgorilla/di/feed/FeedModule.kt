@@ -33,5 +33,6 @@ class FeedModule(
     fun provideLoadFeedListUC() =
         LoadFeedUC(provideUserRepository())
 
-    fun provideUserRepository() = FeedRepository(errorHandler, provideFeedLocalSource(), provideFeedRemoteSource())
+    fun provideUserRepository() =
+        FeedRepository(errorHandler, provideFeedLocalSource(), provideFeedRemoteSource())
 }

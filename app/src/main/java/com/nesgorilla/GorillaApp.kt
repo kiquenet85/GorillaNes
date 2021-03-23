@@ -5,7 +5,7 @@ import com.nesgorilla.di.AppComponent
 
 class GorillaApp : Application() {
 
-    override fun onCreate(){
+    override fun onCreate() {
         super.onCreate()
         initDIModules()
     }

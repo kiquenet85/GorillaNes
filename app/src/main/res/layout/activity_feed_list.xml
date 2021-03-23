@@ -22,12 +22,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/frag_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/feed_nav_graph"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:navGraph="@navigation/feed_nav_graph" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

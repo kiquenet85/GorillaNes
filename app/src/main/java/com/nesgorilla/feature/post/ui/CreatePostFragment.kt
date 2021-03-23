@@ -4,15 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.nesgorilla.R
 import com.nesgorilla.base.BaseFragment
-import com.nesgorilla.feature.feed.ui.FeedListFragmentDirections
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -48,7 +44,7 @@ class CreatePostFragment : BaseFragment() {
         addPhoto = view.findViewById(R.id.button)
         image = view.findViewById(R.id.image)
 
-        characters.setText("0/$MAX_POST_SIZE")
+        characters.text = "0/$MAX_POST_SIZE"
         addPhoto.apply {
             setOnClickListener {
                 requestDevicePhoto()
@@ -57,7 +53,7 @@ class CreatePostFragment : BaseFragment() {
 
         post.doAfterTextChanged {
             val size = it.toString().count()
-            characters.setText("$size/${MAX_POST_SIZE - size}")
+            characters.text = "$size/${MAX_POST_SIZE - size}"
         }
     }
 
@@ -66,13 +62,13 @@ class CreatePostFragment : BaseFragment() {
         this.file = file
         Picasso.get()
             .load(file)
-            .into(image, object: Callback {
+            .into(image, object : Callback {
                 override fun onSuccess() {
 
                 }
 
                 override fun onError(e: Exception) {
-                   errorHandler.report(e)
+                    errorHandler.report(e)
                 }
             })
     }
@@ -100,13 +96,21 @@ class CreatePostFragment : BaseFragment() {
                 putExtra(Intent.EXTRA_TITLE, getString(R.string.post_title))
 
                 file?.let {
-                    data = FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", it)
+                    data = FileProvider.getUriForFile(
+                        requireContext(),
+                        requireContext().applicationContext.packageName + ".provider",
+                        it
+                    )
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
             }, null)
             startActivity(share)
         } else {
-            Toast.makeText(requireContext(), getString(R.string.please_share_post_to_send), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.please_share_post_to_send),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -115,7 +119,7 @@ class CreatePostFragment : BaseFragment() {
         keyboardHidden()
     }
 
-    companion object{
+    companion object {
         const val MAX_POST_SIZE = 105
     }
 }

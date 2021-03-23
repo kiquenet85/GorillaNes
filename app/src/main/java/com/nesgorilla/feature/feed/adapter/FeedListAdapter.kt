@@ -15,7 +15,8 @@ import com.nesgorilla.util.WHITE_SPACE
 class FeedListAdapter(private val localDataSet: MutableList<Feed>) :
     RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
 
-    private val resourceManager: ResourceManager = AppComponent.getInstance().provideResourceManager()
+    private val resourceManager: ResourceManager =
+        AppComponent.getInstance().provideResourceManager()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)

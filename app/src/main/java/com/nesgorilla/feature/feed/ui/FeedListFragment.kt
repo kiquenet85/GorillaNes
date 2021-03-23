@@ -1,21 +1,13 @@
 package com.nesgorilla.feature.feed.ui
 
-import android.animation.AnimatorSet
-import android.animation.ValueAnimator
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.animation.doOnCancel
-import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,7 +47,8 @@ class FeedListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.date).text = resourceManager.formatDate(Calendar.getInstance().time)
+        view.findViewById<TextView>(R.id.date).text =
+            resourceManager.formatDate(Calendar.getInstance().time)
         recyclerView = view.findViewById(R.id.feed)
         feedHeader = view.findViewById(R.id.feedHeader)
         postBox = view.findViewById(R.id.post)
@@ -63,7 +56,7 @@ class FeedListFragment : BaseFragment() {
         postBox.apply {
             setOnFocusChangeListener { it, hasFocus ->
                 if (hasFocus) {
-                   navigateToCreatePost()
+                    navigateToCreatePost()
                     it.clearFocus()
                 }
             }

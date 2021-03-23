@@ -41,14 +41,14 @@
             android:id="@+id/post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:background="@color/white"
             android:padding="@dimen/default_large_size"
             android:text="@string/feed_post"
             android:textSize="@dimen/large_text_size"
-            tools:text="What's on your mind?"/>
+            tools:text="What's on your mind?" />
 
     </LinearLayout>
 

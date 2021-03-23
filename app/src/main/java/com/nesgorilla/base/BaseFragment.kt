@@ -95,13 +95,13 @@ open class BaseFragment : Fragment() {
     protected open fun setPickedImageToImageView(filePath: File) {
     }
 
-    open fun verifyStoragePermissions() : Boolean {
+    open fun verifyStoragePermissions(): Boolean {
         val permission = ActivityCompat.checkSelfPermission(
             requireActivity(),
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
 
-       return if (permission != PackageManager.PERMISSION_GRANTED) {
+        return if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 PERMISSIONS_STORAGE,
@@ -120,15 +120,20 @@ open class BaseFragment : Fragment() {
         when (requestCode) {
             REQUEST_EXTERNAL_STORAGE -> {
                 if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
                     requestDevicePhoto()
                 } else {
-                    Toast.makeText(requireContext(), "Not available to attach system photos.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Not available to attach system photos.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return
             }
+        }
     }
-}
 
     companion object {
         private val PERMISSIONS_STORAGE = arrayOf(

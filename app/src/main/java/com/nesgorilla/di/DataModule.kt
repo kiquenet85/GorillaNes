@@ -7,7 +7,7 @@ import com.nesgorilla.model.database.GorillaDB
 class DataModule(appContext: Context) {
 
     private val roomDB = Room.databaseBuilder(appContext, GorillaDB::class.java, "GorillaDB")
-            .fallbackToDestructiveMigration().build()
+        .fallbackToDestructiveMigration().build()
 
     fun provideDB(): GorillaDB {
         return roomDB

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 
 interface RepositoryReadOperation<Remote, Local, Info, Return> : RepositoryPolicy<Info> {
 
-    fun getErrorHandler() : ErrorHandler
+    fun getErrorHandler(): ErrorHandler
 
     suspend fun execute(info: Info): Flow<Return> {
         val emmitRemoteErrors = flow<Return> {

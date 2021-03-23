@@ -1,4 +1,5 @@
 @file:JvmName("CommonConstants")
+
 package com.nesgorilla.util
 
 const val EMPTY_STRING = ""

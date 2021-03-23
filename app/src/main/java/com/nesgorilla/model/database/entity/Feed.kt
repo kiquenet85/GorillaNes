@@ -15,7 +15,7 @@ import com.nesgorilla.util.ACCOUNT_MOCK
 data class Feed(
     @PrimaryKey
     var id: String,
-    var accountId : String,
+    var accountId: String,
     var first_name: String,
     var last_name: String,
     var post_body: String?,
