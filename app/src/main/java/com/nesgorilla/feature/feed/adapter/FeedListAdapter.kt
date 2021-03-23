@@ -1,6 +1,5 @@
 package com.nesgorilla.feature.feed.adapter
 
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.nesgorilla.di.AppComponent
 import com.nesgorilla.manager.ResourceManager
 import com.nesgorilla.model.database.entity.Feed
 import com.nesgorilla.util.WHITE_SPACE
-import java.util.*
 
 
 class FeedListAdapter(private val localDataSet: MutableList<Feed>) :

@@ -1,11 +1,22 @@
 package com.nesgorilla.feature.feed.ui
 
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.doOnCancel
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +37,9 @@ import java.util.*
  */
 class FeedListFragment : BaseFragment() {
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var feedHeader: LinearLayout
+    private lateinit var postBox: EditText
     private lateinit var feedAdapter: FeedListAdapter
     private val viewModel by viewModels<FeedListViewModel>(factoryProducer = {
         AppComponent.getInstance().provideFeedModule()
@@ -42,7 +56,20 @@ class FeedListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<TextView>(R.id.date).text = resourceManager.formatDate(Calendar.getInstance().time)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.feed)
+        recyclerView = view.findViewById(R.id.feed)
+        feedHeader = view.findViewById(R.id.feedHeader)
+        postBox = view.findViewById(R.id.post)
+
+        postBox.apply {
+            setOnFocusChangeListener { it, hasFocus ->
+                val heightRecycler = recyclerView.height
+                animateViews(
+                    listOf(
+                        slideView(feedHeader, it.height, it.height + heightRecycler)
+                    )
+                )
+            }
+        }
 
         feedAdapter = FeedListAdapter(mutableListOf())
         val itemDecorator = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
@@ -77,4 +104,51 @@ class FeedListFragment : BaseFragment() {
             feedAdapter.addNewItems(feedListState.allItems)
         })
     }
+
+
+    private fun animateViews(animators: List<ValueAnimator>) {
+        val animationSet = AnimatorSet()
+        animationSet.interpolator = AccelerateDecelerateInterpolator()
+        animationSet.playTogether(animators)
+        animationSet.doOnStart {
+            clearKeyboardFromScreen(activity as Activity)
+            recyclerView.visibility = View.GONE
+            feedHeader.findViewById<TextView>(R.id.date).visibility = View.GONE
+            feedHeader.findViewById<TextView>(R.id.hello).visibility = View.GONE
+
+            val layoutParams = feedHeader.layoutParams
+            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
+            feedHeader.layoutParams = layoutParams
+        }
+        animationSet.doOnEnd {
+            val layoutParams = postBox.layoutParams
+            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
+            postBox.layoutParams = layoutParams
+        }
+        animationSet.doOnCancel {
+
+        }
+        animationSet.start()
+    }
+}
+
+fun slideView(
+    view: View,
+    currentHeight: Int,
+    newHeight: Int
+): ValueAnimator {
+
+    val slideAnimator = ValueAnimator
+        .ofInt(currentHeight, newHeight)
+        .setDuration(500)
+
+    slideAnimator.addUpdateListener { animation1 ->
+        val value = animation1.animatedValue as Int
+        view.layoutParams.height = value
+        view.requestLayout()
+    }
+
+    return slideAnimator
 }
