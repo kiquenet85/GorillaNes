@@ -35,9 +35,9 @@ class FeedLocalSourceImp(private val db: GorillaDB) : FeedLocalSource {
         return true
     }
 
-    override suspend fun createOrUpdate(accountId: String, item: Feed): Boolean {
-        if (db.feedDAO().update(entityToInsert = item) == 0) {
-            db.feedDAO().insert(item)
+    override suspend fun createOrUpdate(accountId: String, items: Feed): Boolean {
+        if (db.feedDAO().update(entityToInsert = items) == 0) {
+            db.feedDAO().insert(items)
         }
         return true
     }

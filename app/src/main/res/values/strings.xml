@@ -4,4 +4,5 @@
     //POST
     <string name="feed_hello">Hello Gorilla</string>
     <string name="feed_post">What\'s on your mind?</string>
+    <string name="add_photo">Add Photo</string>
 </resources>

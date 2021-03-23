@@ -11,7 +11,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnCancel
@@ -20,6 +19,7 @@ import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,12 +62,14 @@ class FeedListFragment : BaseFragment() {
 
         postBox.apply {
             setOnFocusChangeListener { it, hasFocus ->
-                val heightRecycler = recyclerView.height
-                animateViews(
-                    listOf(
-                        slideView(feedHeader, it.height, it.height + heightRecycler)
+                if (hasFocus) {
+                    val heightRecycler = recyclerView.height
+                    animateViews(
+                        listOf(
+                            slideView(feedHeader, it.height, it.height + heightRecycler)
+                        )
                     )
-                )
+                }
             }
         }
 
@@ -126,11 +128,16 @@ class FeedListFragment : BaseFragment() {
             layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
             layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
             postBox.layoutParams = layoutParams
+            navigateToCreatePost()
         }
         animationSet.doOnCancel {
-
+            navigateToCreatePost()
         }
         animationSet.start()
+    }
+
+    private fun navigateToCreatePost() {
+        findNavController().navigate(FeedListFragmentDirections.actionToCreatePost())
     }
 }
 

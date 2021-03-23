@@ -20,4 +20,8 @@ open class BaseFragment : Fragment(){
         }
         activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
+
+    open fun keyboardResizeMode(activity: Activity) {
+        activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
 }

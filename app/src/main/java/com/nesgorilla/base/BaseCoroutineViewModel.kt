@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 abstract class BaseCoroutineViewModel(errorHandler: ErrorHandler) : ViewModel() {
-    open val errorHandler = CoroutineExceptionHandler { coroutineScope, exception ->
+    open val errorHandler = CoroutineExceptionHandler { _, exception ->
         viewModelScope.launch {
             try {
                 errorState.value =

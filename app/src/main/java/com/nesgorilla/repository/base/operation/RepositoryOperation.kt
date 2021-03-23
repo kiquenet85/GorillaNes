@@ -21,7 +21,7 @@ interface RepositoryReadOperation<Remote, Local, Info, Return> : RepositoryPolic
         }.catch { e ->
             getErrorHandler().report(e)
         }.flowOn(Dispatchers.IO)
-        return listOf(readFromDatabase(info), emmitRemoteErrors).merge() as Flow<Return>
+        return listOf(readFromDatabase(info), emmitRemoteErrors).merge()
     }
 
     suspend fun endpoint(info: Info): Remote = info as Remote
