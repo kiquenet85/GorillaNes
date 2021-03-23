@@ -63,12 +63,8 @@ class FeedListFragment : BaseFragment() {
         postBox.apply {
             setOnFocusChangeListener { it, hasFocus ->
                 if (hasFocus) {
-                    val heightRecycler = recyclerView.height
-                    animateViews(
-                        listOf(
-                            slideView(feedHeader, it.height, it.height + heightRecycler)
-                        )
-                    )
+                   navigateToCreatePost()
+                    it.clearFocus()
                 }
             }
         }
@@ -107,55 +103,7 @@ class FeedListFragment : BaseFragment() {
         })
     }
 
-
-    private fun animateViews(animators: List<ValueAnimator>) {
-        val animationSet = AnimatorSet()
-        animationSet.interpolator = AccelerateDecelerateInterpolator()
-        animationSet.playTogether(animators)
-        animationSet.doOnStart {
-            clearKeyboardFromScreen(activity as Activity)
-            recyclerView.visibility = View.GONE
-            feedHeader.findViewById<TextView>(R.id.date).visibility = View.GONE
-            feedHeader.findViewById<TextView>(R.id.hello).visibility = View.GONE
-
-            val layoutParams = feedHeader.layoutParams
-            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-            layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
-            feedHeader.layoutParams = layoutParams
-        }
-        animationSet.doOnEnd {
-            val layoutParams = postBox.layoutParams
-            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT
-            layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT
-            postBox.layoutParams = layoutParams
-            navigateToCreatePost()
-        }
-        animationSet.doOnCancel {
-            navigateToCreatePost()
-        }
-        animationSet.start()
-    }
-
     private fun navigateToCreatePost() {
         findNavController().navigate(FeedListFragmentDirections.actionToCreatePost())
     }
-}
-
-fun slideView(
-    view: View,
-    currentHeight: Int,
-    newHeight: Int
-): ValueAnimator {
-
-    val slideAnimator = ValueAnimator
-        .ofInt(currentHeight, newHeight)
-        .setDuration(500)
-
-    slideAnimator.addUpdateListener { animation1 ->
-        val value = animation1.animatedValue as Int
-        view.layoutParams.height = value
-        view.requestLayout()
-    }
-
-    return slideAnimator
 }

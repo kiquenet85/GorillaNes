@@ -1,15 +1,18 @@
 package com.nesgorilla.feature.post.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.content.FileProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.nesgorilla.R
 import com.nesgorilla.base.BaseFragment
+import com.nesgorilla.feature.feed.ui.FeedListFragmentDirections
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -35,15 +38,17 @@ class CreatePostFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        keyboardResizeMode(activity as Activity)
+        keyboardResizeMode()
         post = view.findViewById(R.id.post)
         characters = view.findViewById(R.id.characters)
         addPhoto = view.findViewById(R.id.button)
         image = view.findViewById(R.id.image)
 
+        characters.setText("0/$MAX_POST_SIZE")
         addPhoto.apply {
             setOnClickListener {
                 requestDevicePhoto()
@@ -52,7 +57,7 @@ class CreatePostFragment : BaseFragment() {
 
         post.doAfterTextChanged {
             val size = it.toString().count()
-            characters.setText("$size/${105 - size}")
+            characters.setText("$size/${MAX_POST_SIZE - size}")
         }
     }
 
@@ -103,5 +108,14 @@ class CreatePostFragment : BaseFragment() {
         } else {
             Toast.makeText(requireContext(), getString(R.string.please_share_post_to_send), Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        keyboardHidden()
+    }
+
+    companion object{
+        const val MAX_POST_SIZE = 105
     }
 }

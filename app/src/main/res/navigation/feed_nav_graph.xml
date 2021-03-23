@@ -13,12 +13,16 @@
 
         <action
             android:id="@+id/action_to_create_post"
-            app:destination="@id/CreatePostFragment"
-            />
+            app:destination="@id/CreatePostFragment" />
     </fragment>
     <fragment
         android:id="@+id/CreatePostFragment"
         android:name="com.nesgorilla.feature.post.ui.CreatePostFragment"
         android:label="Create Post"
-        tools:layout="@layout/create_post_fragment" />
+        tools:layout="@layout/create_post_fragment">
+        <action
+            android:id="@+id/action_to_feed_list"
+            app:popUpTo="@id/FeedListFragment" />
+    </fragment>
+
 </navigation>
